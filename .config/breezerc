@@ -9,7 +9,7 @@ TitleAlignment=AlignLeft
 [Windeco Exception 0]
 BorderSize=0
 Enabled=true
-ExceptionPattern=.+-nativefier-.+|balena-etcher-electron|bitpay|gimp-2.+|nheko|Riot|Signal|Skype|Spotify|Sublime_text|TeamViewer|Tor Browser|telegram-desktop|vlc|Wire
+ExceptionPattern=.+-nativefier-.+|balena-etcher-electron|bitpay|FoxitReader|gimp-2.+|konsole|nheko|Riot|Signal|Skype|Spotify|Sublime_text|TeamViewer|Tor Browser|telegram-desktop|vlc|Wire
 ExceptionType=0
 HideTitleBar=false
 Mask=16
