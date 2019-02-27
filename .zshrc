@@ -16,8 +16,12 @@ antigen bundle /usr/share/zsh-syntax-highlighting --no-local-clone
 
 antigen apply
 
-PROMPT='❯ '
-RPROMPT='%~$(git_prompt_info) %F{250}%n@%f%F{039}$(hostname -f)%f'
+PROMPT='%F{250}%n@%f%F{039}$(hostname -f)%f %~$(git_prompt_info) > '
+RPROMPT=''
+
+#PROMPT='❯ '
+#RPROMPT='%~$(git_prompt_info) %F{250}%n@%f%F{039}$(hostname -f)%f'
+
 
 # zsh-notify settings
 #zstyle ':notify:*' command-complete-timeout 5
