@@ -22,12 +22,11 @@ RPROMPT=''
 #PROMPT='❯ '
 #RPROMPT='%~$(git_prompt_info) %F{250}%n@%f%F{039}$(hostname -f)%f'
 
-
 # zsh-notify settings
 #zstyle ':notify:*' command-complete-timeout 5
-#zstyle ':notify:*' error-title "T___T"
-#zstyle ':notify:*' success-title "^___^"
-
+#zstyle ':notify:*' error-title "T___T in #{time_elapsed}"
+#zstyle ':notify:*' success-title "^___^ in #{time_elapsed}"
+#zstyle ':notify:*' expire-time 5000
 
 # History
 HISTFILE=~/.histfile
@@ -36,10 +35,12 @@ SAVEHIST=1000000
 setopt appendhistory autocd extendedglob
 bindkey -e
 
+# Key bindings
+bindkey '5~' kill-word
+bindkey '^H' backward-kill-word
 
 # Compinstall
 zstyle :compinstall filename ~/.zshrc
 
 autoload -Uz compinit
 compinit
-
