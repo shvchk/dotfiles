@@ -29,6 +29,7 @@ fi
 
 PROMPT="%F{250}%n${prompt_hostname}%f %~$(git_prompt_info) > "
 RPROMPT="%F{240}%D{%H:%M:%S}%f"
+ZLE_RPROMPT_INDENT=0
 
 precmd() {
   export last_command_finish_time=`date +%H:%M:%S`
@@ -40,7 +41,7 @@ function _accept-line {
      [ -n "$last_command_finish_time" ] && \
      [ "$last_command_start_time" != "$last_command_finish_time" ]; then
 
-    DATE_POS=$(( $COLUMNS - 10 ))
+    DATE_POS=$(( $COLUMNS - 9 ))
     echo -e "\e[${COLUMNS}D\e[K\e[${DATE_POS}C \e[38;5;240m${last_command_finish_time}\e[39"
   fi
 
@@ -50,6 +51,20 @@ function _accept-line {
 }
 
 zle -N accept-line _accept-line
+
+# This speeds up pasting w/ autosuggest
+# https://github.com/zsh-users/zsh-autosuggestions/issues/238
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # zsh-notify settings
 #zstyle ':notify:*' command-complete-timeout 5
