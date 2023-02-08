@@ -17,36 +17,31 @@ antigen bundle /usr/share/zsh-syntax-highlighting --no-local-clone
 antigen apply
 
 
-prompt_username="%n"
+function _user_host_prompt() {
+  local u h am_i_remote output
 
-if [[ "$UID" = "1000" ]]; then
-  prompt_username=""
-fi
+  [[ "$UID" = "1000" ]] && u="" || u="%F{250}%n"
 
-prompt_hostname="@%F{039}$(hostname -f)"
-am_i_remote=`loginctl show-session $XDG_SESSION_ID -p Remote --value`
+  am_i_remote=`loginctl show-session $XDG_SESSION_ID -p Remote --value`
+  [[ "$am_i_remote" = "no" ]] && h="" || h="%F{039}$(hostname -f)"
 
-if [[ "$am_i_remote" = "no" ]]; then
-  prompt_hostname=""
-fi
+  [[ -n "$u" && -n "$h" ]] && prompt_hostname="@$prompt_hostname"
 
-prompt_spacer=" "
-
-if [[ -z "${prompt_username}${prompt_hostname}" ]]; then
-  prompt_spacer=""
-fi
-
-#PROMPT='❯ '
-#RPROMPT='%~$(git_prompt_info) %F{250}%n@%f%F{039}$(hostname -f)%f'
+  output="${u}${h}"
+  [[ -n "$output" ]] && echo -n "$output%f "
+}
 
 function _git_prompt_custom() {
   prompt_git="$(git_prompt_info)"
-  if [[ "$prompt_git" != "" ]]; then
+  if [[ -n "$prompt_git" ]]; then
     echo -n " $prompt_git"
   fi
 }
 
-PROMPT="%F{250}${prompt_username}${prompt_hostname}%f${prompt_spacer}%~"'$(_git_prompt_custom)'" > "
+#PROMPT='❯ '
+#RPROMPT='%~$(git_prompt_info) %F{250}%n@%f%F{039}$(hostname -f)%f'
+
+PROMPT="$(_user_host_prompt)%~"'$(_git_prompt_custom)'" > "
 RPROMPT="%F{240}%D{%H:%M:%S}%f"
 ZLE_RPROMPT_INDENT=0
 
