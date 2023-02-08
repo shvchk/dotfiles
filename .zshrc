@@ -17,17 +17,36 @@ antigen bundle /usr/share/zsh-syntax-highlighting --no-local-clone
 antigen apply
 
 
+prompt_username="%n"
+
+if [[ "$UID" = "1000" ]]; then
+  prompt_username=""
+fi
+
 prompt_hostname="@%F{039}$(hostname -f)"
 am_i_remote=`loginctl show-session $XDG_SESSION_ID -p Remote --value`
 
 if [[ "$am_i_remote" = "no" ]]; then
-  prompt_hostname=''
+  prompt_hostname=""
+fi
+
+prompt_spacer=" "
+
+if [[ -z "${prompt_username}${prompt_hostname}" ]]; then
+  prompt_spacer=""
 fi
 
 #PROMPT='❯ '
 #RPROMPT='%~$(git_prompt_info) %F{250}%n@%f%F{039}$(hostname -f)%f'
 
-PROMPT="%F{250}%n${prompt_hostname}%f %~$(git_prompt_info) > "
+function _git_prompt_custom() {
+  prompt_git="$(git_prompt_info)"
+  if [[ "$prompt_git" != "" ]]; then
+    echo -n " $prompt_git"
+  fi
+}
+
+PROMPT="%F{250}${prompt_username}${prompt_hostname}%f${prompt_spacer}%~"'$(_git_prompt_custom)'" > "
 RPROMPT="%F{240}%D{%H:%M:%S}%f"
 ZLE_RPROMPT_INDENT=0
 
