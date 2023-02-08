@@ -32,10 +32,8 @@ function _user_host_prompt() {
 }
 
 function _git_prompt_custom() {
-  prompt_git="$(git_prompt_info)"
-  if [[ -n "$prompt_git" ]]; then
-    echo -n " $prompt_git"
-  fi
+  local output="$(git_prompt_info)"
+  [[ -n "$output" ]] && echo -n " $output"
 }
 
 #PROMPT='❯ '
