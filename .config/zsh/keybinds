@@ -1,5 +1,14 @@
 # Source: https://githubcom/Phantas0s/dotfiles/blob/master/zsh/bindingszsh
 
+'bindkey' '-s' '^[OH'    '^[[H'       # Home
+'bindkey' '-s' '^[[1~'   '^[[H'       # Home
+'bindkey' '-s' '^[[7~'   '^[[H'       # Home
+'bindkey' '-s' '^[OF'    '^[[F'       # End
+'bindkey' '-s' '^[[4~'   '^[[F'       # End
+'bindkey' '-s' '^[[8~'   '^[[F'       # End
+'bindkey' '-s' '^[Oc'    '^[[1;5C'    # Ctrl+Right
+'bindkey' '-s' '^[Od'    '^[[1;5D'    # Ctrl+Left
+
 typeset -gA keys=(
   Up                   '^[[A'
   Down                 '^[[B'
