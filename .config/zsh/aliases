@@ -1,0 +1,18 @@
+alias ls='ls --color=auto'
+alias l='ls -l'
+alias ll='ls -alhF'
+alias la='ls -A'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias grep='grep --color'
+
+alias -g NE="2> /dev/null"
+alias -g NUL="> /dev/null 2>&1"
+
+alias n='nnn -cd'
+alias fd='fdfind'
+alias bat='batcat'
+
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'

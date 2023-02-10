@@ -1,0 +1,50 @@
+_user_host_prompt() {
+  local u h am_i_remote output
+
+  [[ "$UID" = "1000" ]] && u="" || u="%F{250}%n"
+
+  am_i_remote=`loginctl show-session $XDG_SESSION_ID -p Remote --value`
+  [[ "$am_i_remote" = "no" ]] && h="" || h="%F{039}$(hostname -f)"
+
+  [[ -n "$u" && -n "$h" ]] && prompt_hostname="@$prompt_hostname"
+
+  output="${u}${h}"
+  [[ -n "$output" ]] && echo -n "$output%f "
+}
+
+_git_prompt_custom() {
+  local output="$(git_prompt_info)"
+  [[ -n "$output" ]] && echo -n " $output"
+}
+
+precmd() {
+  export last_command_finish_time=`date +%H:%M:%S`
+}
+
+# Show time when command is executed in RPROMPT: https://stackoverflow.com/q/13125825
+_accept-line() {
+  if [ -n "$last_command_start_time" ] && \
+     [ -n "$last_command_finish_time" ] && \
+     [ "$last_command_start_time" != "$last_command_finish_time" ]; then
+
+    DATE_POS=$(( $COLUMNS - 9 ))
+    echo -e "\e[${COLUMNS}D\e[K\e[${DATE_POS}C \e[38;5;240m${last_command_finish_time}\e[39"
+  fi
+
+  export last_command_start_time=`date +%H:%M:%S`
+  zle reset-prompt
+  zle .accept-line # Note the . meaning the built-in accept-line.
+}
+
+zle -N accept-line _accept-line
+
+
+PROMPT="$(_user_host_prompt)%~"'$(_git_prompt_custom)'" > "
+RPROMPT="%F{240}%D{%H:%M:%S}%f"
+ZLE_RPROMPT_INDENT=0
+
+ZSH_THEME_GIT_PROMPT_DIRTY=" %F{011}×%f"
+ZSH_THEME_GIT_PROMPT_PREFIX="%F{242}|%f "
+ZSH_THEME_GIT_PROMPT_SUFFIX=""
+
+#⨯⦁
