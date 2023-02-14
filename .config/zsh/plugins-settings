@@ -1,0 +1,5 @@
+# zsh-notify
+# zstyle ':notify:*' command-complete-timeout 5
+# zstyle ':notify:*' error-title "T___T in #{time_elapsed}"
+# zstyle ':notify:*' success-title "^___^ in #{time_elapsed}"
+# zstyle ':notify:*' expire-time 5000

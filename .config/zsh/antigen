@@ -1,0 +1,15 @@
+. /usr/share/zsh-antigen/antigen.zsh
+
+antigen use oh-my-zsh
+
+antigen bundle autojump
+antigen bundle command-not-found
+antigen bundle fzf
+#antigen bundle git
+#antigen bundle mosh
+antigen bundle systemd
+#antigen bundle marzocchi/zsh-notify
+antigen bundle /usr/share/zsh-autosuggestions --no-local-clone
+antigen bundle /usr/share/zsh-syntax-highlighting --no-local-clone
+
+antigen apply
