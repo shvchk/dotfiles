@@ -6,7 +6,7 @@ _user_host_prompt() {
   am_i_remote=`loginctl show-session $XDG_SESSION_ID -p Remote --value`
   [[ "$am_i_remote" = "no" ]] && h="" || h="%F{039}$(hostname -f)"
 
-  [[ -n "$u" && -n "$h" ]] && prompt_hostname="@$prompt_hostname"
+  [[ -n "$u" && -n "$h" ]] && h="@$h"
 
   output="${u}${h}"
   [[ -n "$output" ]] && echo -n "$output%f "
