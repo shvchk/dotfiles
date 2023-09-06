@@ -11,6 +11,7 @@ alias grep='grep --color'
 alias -g NE="2> /dev/null"
 alias -g NUL="> /dev/null 2>&1"
 
+alias sudo='sudo '
 alias n='nnn -dU'
 alias fd='fdfind'
 alias bat='batcat'
